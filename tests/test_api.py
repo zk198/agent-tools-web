@@ -17,3 +17,8 @@ def test_mcp_allowlist():
     names = {tool.name for tool in asyncio.run(mcp.list_tools())}
     assert {"web_search", "fetch_url"} <= names
     assert "health" not in names
+
+
+def test_fetch_rejects_private_destination():
+    response = client.post("/v1/fetch", json={"url": "http://127.0.0.1/"})
+    assert response.status_code == 400
