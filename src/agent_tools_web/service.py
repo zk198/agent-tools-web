@@ -16,7 +16,14 @@ class PublicResolver(aiohttp.abc.AbstractResolver):
             ip = ipaddress.ip_address(address)
             if ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast:
                 continue
-            addresses.append({"hostname": host, "host": address, "port": port, "family": family or socket.AF_INET, "proto": 0, "flags": 0})
+            addresses.append({
+                "hostname": host,
+                "host": address,
+                "port": port,
+                "family": family or socket.AF_INET,
+                "proto": 0,
+                "flags": 0,
+            })
         if not addresses:
             raise ValueError("Destination address is not public")
         return addresses
