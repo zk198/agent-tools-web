@@ -9,7 +9,8 @@ class WebService:
 
     async def search(self, query: str, limit: int) -> SearchResponse:
         return SearchResponse(results=[
-            SearchResult(title=f"Search result for: {query}", url="https://example.invalid/", snippet="Search provider not configured.")
+            SearchResult(title=f"Search result for: {query}", url="https://example.invalid/",
+                snippet="Search provider not configured.",)
         ][:limit])
 
     async def fetch(self, url: str) -> FetchResponse:
