@@ -46,6 +46,15 @@ class WebService:
         parsed = urlparse(url)
         if parsed.scheme not in {"http", "https"} or not parsed.hostname:
             raise ValueError("Only absolute HTTP(S) URLs are allowed")
+        try:
+            literal = ipaddress.ip_address(parsed.hostname)
+        except ValueError:
+            literal = None
+        if literal is not None and (
+            literal.is_private or literal.is_loopback or literal.is_link_local
+            or literal.is_reserved or literal.is_multicast
+        ):
+            raise ValueError("Destination address is not public")
         timeout = aiohttp.ClientTimeout(total=self.timeout)
         connector = aiohttp.TCPConnector(resolver=PublicResolver(), use_dns_cache=False)
         async with aiohttp.ClientSession(timeout=timeout, connector=connector, trust_env=False) as client:
