@@ -7,6 +7,7 @@ dependencies = [
   "fastapi>=0.116,<1",
   "fastmcp>=4.0.0,<5",
   "httpx>=0.28,<1",
+  "aiohttp>=3.12,<4",
   "uvicorn[standard]>=0.35,<1",
 ]
 [dependency-groups]
