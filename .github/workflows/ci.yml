@@ -3,17 +3,24 @@ on:
   pull_request:
   push:
     branches: [main]
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v7
-        with:
-          version: "0.10.0"
+        with: {version: "0.10.0"}
       - run: uv lock
       - run: uv sync --all-groups
       - run: uv run ruff check .
       - run: uv run mypy src
-      - run: uv run pytest --cov=agent_tools_web --cov-report=term-missing
+      - run: uv run pytest --cov=agent_tools_web --cov-report=term-missing --cov-fail-under=70
       - run: docker build -t agent-tools-web:test .
+      - uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: agent-tools-web:test
+          format: table
+          exit-code: "1"
+          severity: CRITICAL,HIGH
