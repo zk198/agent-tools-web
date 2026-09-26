@@ -1,0 +1,10 @@
+use_default_settings: true
+
+server:
+  bind_address: "0.0.0.0"
+  secret_key: "local-development-only-change-me"
+
+search:
+  formats:
+    - html
+    - json
