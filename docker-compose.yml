@@ -13,6 +13,8 @@ services:
     image: searxng/searxng:2026.9.18-0d6910ae5
     expose:
       - "8080"
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
     networks: [search]
 
 networks:
