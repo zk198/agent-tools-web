@@ -7,4 +7,4 @@ COPY src ./src
 RUN uv sync --locked --no-dev
 ENV PATH="/app/.venv/bin:$PATH"
 EXPOSE 8000 8001
-CMD ["sh", "-c", "uvicorn agent_tools_web.api:app --host 0.0.0.0 --port 8000 & API=$!; python -c 'from agent_tools_web.mcp import mcp; mcp.run(transport="http", host="0.0.0.0", port=8001)'"]
+CMD ["sh", "-c", "uvicorn agent_tools_web.api:app --host 0.0.0.0 --port 8000 & API=$!; uvicorn agent_tools_web.mcp:mcp_app --host 0.0.0.0 --port 8001"]
