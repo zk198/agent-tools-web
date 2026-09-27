@@ -12,4 +12,4 @@ mcp = FastMCP.from_fastapi(
         RouteMap(mcp_type=MCPType.EXCLUDE),
     ],
 )
-mcp_app = mcp.http_app(path="/mcp")
+mcp_app = mcp.http_app(path="/mcp", transport="http", stateless_http=True)
