@@ -12,6 +12,4 @@ mcp = FastMCP.from_fastapi(
         RouteMap(mcp_type=MCPType.EXCLUDE),
     ],
 )
-
-if __name__ == "__main__":
-    mcp.run(transport="http", host="0.0.0.0", port=8001)
+mcp_app = mcp.http_app(path="/mcp", transport="http", stateless_http=True)
